@@ -31,3 +31,7 @@ To be able to use this project, several assumptions are made regarding your setu
 - In ClouDNS, your API user has **ALL** (read: both IPv4 and IPv6) IPs allowed, not just your primary.
 - In Plesk, you allow ClouDNS to transfer zones as slave under Tools & Settings > General Settings > DNS Template > Transfer Restrictions Template. **ALL** your listed nameservers should be there (both IPv4 and IPv6), in order to properly propagate records.
 - Having configured ClouDNS does not mean that the records are actually used if the 
+
+# Credits
+This script is a modified version of the official [ClouDNS php script](https://github.com/ClouDNS/cloudns-api-bulk-updates/blob/master/plesk-slave-zones-add/plesk-slave-zones-add.php) for the same task. This version is lighter and event based though, but does not implement an exclude list.
+

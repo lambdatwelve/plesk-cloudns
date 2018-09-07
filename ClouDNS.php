@@ -29,17 +29,36 @@ class ClouDnsSlaveManager implements EventListener
     if($this->authid == '') { 
       error_log('ClouDNS credentials empty, doing nothing.');
     }
-    
-    if($objectType != 'domain') { return; }
-    
-      switch($action) {
-        case 'domain_create':
-          $this->addSlave($newValues['Domain Name']);
-          break;
-        case 'domain_delete':
-          $this->delSlave($oldValues['Domain Name']);
-          break;
-      }
+  
+    switch($objectType) {
+      case 'domain_alias':
+        switch($action) {
+          case 'domain_alias_create':
+            $this->addSlave($newValues['Domain Alias Name']);
+            break;
+          case 'domain_alias_delete':
+            $this->delSlave($oldValues['Domain Alias Name']);
+            break;
+          default:
+            // Do nothing, updates are handled by zone transfers.
+        }
+        break;
+      case 'domain':
+        switch($action) {
+          case 'domain_create':
+            $this->addSlave($newValues['Domain Name']);
+            break;
+          case 'domain_delete':
+            $this->delSlave($oldValues['Domain Name']);
+            break;
+          default:
+            // Do nothing, updates are handled by zone transfers.
+        }
+        break;
+      default:
+        // Do we need more objectTypes? Open an issue here:
+        // https://github.com/lambdatwelve/plesk-cloudns/issues
+        return;
     }
   }
 

@@ -1,4 +1,4 @@
-# plesk-cloudns-event
+# plesk-cloudns
 Automagically adds/removes slave DNS zones in ClouDNS when events occur in Plesk
 
 # What it does

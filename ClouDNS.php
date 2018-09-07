@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of plesk-cloudns-event.
+ * This file is part of plesk-cloudns.
  *
  * To work, this file needs to be placed at /usr/local/psa/admin/plib/registry/EventListener/ 
  * and credentials filled in.

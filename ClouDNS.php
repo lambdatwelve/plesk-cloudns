@@ -21,11 +21,13 @@ class ClouDnsSlaveManager implements EventListener
   private $authkey  = ''; // Add your API auth-key
   private $masterip = ''; // (Optional) Add your server primary ip here (ClouDNS will talk with this IP)
   private $baseurl  = 'https://api.cloudns.net/'; 
+  private $debug    = FALSE;
 
   /**
    * @see https://docs.plesk.com/en-US/onyx/extensions-guide/plesk-features-available-for-extensions/subscribe-to-plesk-events.71093/
    */
   public function handleEvent($objectType, $objectId, $action, $oldValues,$newValues) {
+    if($this->debug) { error_log('ClouDnsSlaveManager handle event hook called!'); }
     if($this->authid == '') { 
       error_log('ClouDNS credentials empty, doing nothing.');
     }
@@ -70,6 +72,8 @@ class ClouDnsSlaveManager implements EventListener
    * @return void
    */
   private function addSlave($zone) {
+    if($this->debug) { error_log('Attempting to add zone '.$zone.' to the slaves'); }
+   
     $params = array(
      'domain-name' => $zone,
      'zone-type'   => 'slave',
@@ -77,6 +81,7 @@ class ClouDnsSlaveManager implements EventListener
     );  
 
     $response = $this->apiCall('dns/register.json', $params);
+    if($this->debug) { error_log(print_r($response,1)); }
 
     if($response['status'] == 'Failed') {
      error_log('Failed to create '.$zone.' with message '.$response['statusDescription']);
@@ -91,10 +96,12 @@ class ClouDnsSlaveManager implements EventListener
    * @return void
    */
   private function delSlave($zone) {
+    if($this->debug) { error_log('Attempting to delete zone '.$zone.' to the slaves'); }
     $params = array(
       'domain-name' => $zone
     );
     $response = $this->apiCall('dns/delete.json', $params);
+    if($this->debug) { error_log(print_r($response,1)); }
 
     if($response['status'] == 'Failed') {
       error_log('Failed to delete '.$zone.' with message '.$response['statusDescription']);

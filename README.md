@@ -32,6 +32,11 @@ To be able to use this project, several assumptions are made regarding your setu
 - In Plesk, you allow ClouDNS to transfer zones as slave under Tools & Settings > General Settings > DNS Template > Transfer Restrictions Template. **ALL** your listed nameservers should be there (both IPv4 and IPv6), in order to properly propagate records.
 - Having configured ClouDNS does not mean that the records are actually used if the 
 
+# Debugging
+- Edit the `ClouDNS.php` file
+- Change the line `$debug = FALSE;` to `$debug=TRUE;`
+- Look into `/var/log/plesk/panel.log` file for messages from this plugin, and create a domain in Plesk.
+
 # Credits
 This script is a modified version of the official [ClouDNS php script](https://github.com/ClouDNS/cloudns-api-bulk-updates/blob/master/plesk-slave-zones-add/plesk-slave-zones-add.php) for the same task. This version is lighter and event based though, but does not implement an exclude list.
 

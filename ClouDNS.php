@@ -57,6 +57,18 @@ class ClouDnsSlaveManager implements EventListener
             // Do nothing, updates are handled by zone transfers.
         }
         break;
+      case 'site':
+        switch($action) {
+          case 'site_create':
+            $this->addSlave($newValues['Domain Name']);
+            break;
+          case 'site_delete':
+            $this->delSlave($oldValues['Domain Name']);
+            break;
+          default:
+            // Do nothing, updates are handled by zone transfers.
+        }
+        break;
       default:
         // Do we need more objectTypes? Open an issue here:
         // https://github.com/lambdatwelve/plesk-cloudns/issues

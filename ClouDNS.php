@@ -2,7 +2,7 @@
 /**
  * This file is part of plesk-cloudns.
  *
- * To work, this file needs to be placed at /usr/local/psa/admin/plib/registry/EventListener/ 
+ * To work, this file needs to be placed at /usr/local/psa/admin/plib/registry/EventListener/
  * and credentials filled in.
  *
  * @package plesk-cloudns-event
@@ -10,7 +10,7 @@
  *
  * @author Nick Andriopoulos <nand@lambda-twelve.com>
  */
- 
+
 /**
  * Our class
  */
@@ -20,7 +20,7 @@ class ClouDnsSlaveManager implements EventListener
   private $authid   = ''; // Add your API auth-id
   private $authkey  = ''; // Add your API auth-key
   private $masterip = ''; // (Optional) Add your server primary ip here (ClouDNS will talk with this IP)
-  private $baseurl  = 'https://api.cloudns.net/'; 
+  private $baseurl  = 'https://api.cloudns.net/';
   private $debug    = FALSE;
 
   /**
@@ -28,10 +28,10 @@ class ClouDnsSlaveManager implements EventListener
    */
   public function handleEvent($objectType, $objectId, $action, $oldValues,$newValues) {
     if($this->debug) { error_log('ClouDnsSlaveManager handle event hook called!'); }
-    if($this->authid == '') { 
+    if($this->authid == '') {
       error_log('ClouDNS credentials empty, doing nothing.');
     }
-  
+
     switch($objectType) {
       case 'domain_alias':
         switch($action) {
@@ -68,17 +68,17 @@ class ClouDnsSlaveManager implements EventListener
    * Invokes the API to add a slave zone.
    *
    * @param string $zone  The zone to create.
-   * 
+   *
    * @return void
    */
   private function addSlave($zone) {
     if($this->debug) { error_log('Attempting to add zone '.$zone.' to the slaves'); }
-   
+
     $params = array(
      'domain-name' => $zone,
      'zone-type'   => 'slave',
      'master-ip'   => $this->masterip,
-    );  
+    );
 
     $response = $this->apiCall('dns/register.json', $params);
     if($this->debug) { error_log(print_r($response,1)); }
@@ -92,7 +92,7 @@ class ClouDnsSlaveManager implements EventListener
    * Invokes the API to delete a slave zone.
    *
    * @param string $zone  The zone to create.
-   * 
+   *
    * @return void
    */
   private function delSlave($zone) {
@@ -106,7 +106,7 @@ class ClouDnsSlaveManager implements EventListener
     if($response['status'] == 'Failed') {
       error_log('Failed to delete '.$zone.' with message '.$response['statusDescription']);
     }
-  
+
   }
 
   /**
@@ -114,7 +114,7 @@ class ClouDnsSlaveManager implements EventListener
    *
    * @param string $url   The API endpoint to call upon.
    * @param array  $data  Associative array that gets sent as query
-   * 
+   *
    * @return array
    */
   function apiCall ($url, $data) {
